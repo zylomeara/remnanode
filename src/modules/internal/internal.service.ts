@@ -18,6 +18,9 @@ export class InternalService {
     private inboundsHashMap: Map<string, HashedSet> = new Map();
     private xtlsConfigInbounds: Set<string> = new Set();
 
+    private hysteria2PasswordToUserId: Map<string, string> = new Map();
+    private hysteria2UserIdToPassword: Map<string, string> = new Map();
+
     constructor() {}
 
     public async getXrayConfig(): Promise<Record<string, unknown>> {
@@ -202,11 +205,39 @@ export class InternalService {
         this.xtlsConfigInbounds.add(inboundTag);
     }
 
+    public addHysteria2User(trojanPassword: string, userId: string): void {
+        const existingPassword = this.hysteria2UserIdToPassword.get(userId);
+        if (existingPassword) {
+            this.hysteria2PasswordToUserId.delete(existingPassword);
+        }
+
+        this.hysteria2PasswordToUserId.set(trojanPassword, userId);
+        this.hysteria2UserIdToPassword.set(userId, trojanPassword);
+    }
+
+    public removeHysteria2User(userId: string): void {
+        const password = this.hysteria2UserIdToPassword.get(userId);
+        if (password) {
+            this.hysteria2PasswordToUserId.delete(password);
+        }
+        this.hysteria2UserIdToPassword.delete(userId);
+    }
+
+    public authenticateHysteria2(password: string): string | null {
+        return this.hysteria2PasswordToUserId.get(password) ?? null;
+    }
+
+    public getHysteria2UsersCount(): number {
+        return this.hysteria2PasswordToUserId.size;
+    }
+
     public cleanup(): void {
         this.logger.log('Cleaning up internal service.');
 
         this.inboundsHashMap.clear();
         this.xtlsConfigInbounds.clear();
+        this.hysteria2PasswordToUserId.clear();
+        this.hysteria2UserIdToPassword.clear();
         this.xrayConfig = null;
         this.emptyConfigHash = null;
     }
