@@ -77,10 +77,7 @@ export class HandlerService {
                                 hashData.vlessUuid,
                             );
                         }
-                        this.internalService.addHysteria2User(
-                            item.password,
-                            item.username,
-                        );
+                        this.internalService.addHysteria2User(item.password, item.username);
                         response.push(tempRes);
                         break;
                     case 'vless':
