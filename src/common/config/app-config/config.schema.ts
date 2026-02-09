@@ -23,6 +23,10 @@ export const configSchema = z
         INTERNAL_SOCKET_PATH: z.string(),
         SUPERVISORD_SOCKET_PATH: z.string(),
         SUPERVISORD_PID_PATH: z.string(),
+        HYSTERIA2_AUTH_PORT: z
+            .string()
+            .optional()
+            .transform((port) => (port ? parseInt(port, 10) : undefined)),
     })
     .superRefine((data, ctx) => {
         if (data.SECRET_KEY) {
