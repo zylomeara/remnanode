@@ -75,6 +75,19 @@ export class InternalService {
                         }
                     }
 
+                    if (
+                        inbound.protocol === 'trojan' &&
+                        inbound.settings?.clients &&
+                        Array.isArray(inbound.settings.clients)
+                    ) {
+                        for (const client of inbound.settings.clients) {
+                            if (client.password && client.email) {
+                                const userId = client.email.split('@')[0];
+                                this.addHysteria2User(client.password, userId);
+                            }
+                        }
+                    }
+
                     this.inboundsHashMap.set(inboundTag, usersSet);
                 },
                 { concurrency: 20 },
@@ -84,6 +97,12 @@ export class InternalService {
                 this.xtlsConfigInbounds.add(inboundTag);
                 this.logger.log(`${inboundTag} has ${usersSet.size} users`);
             }
+        }
+
+        if (this.hysteria2PasswordToUserId.size > 0) {
+            this.logger.log(
+                `Hysteria2 auth map populated with ${this.hysteria2PasswordToUserId.size} users`,
+            );
         }
 
         const result = ems(performance.now() - start, {
