@@ -142,7 +142,6 @@ async function bootstrap(): Promise<void> {
         const hy2AuthPath = '/' + REST_API.HYSTERIA2.AUTH;
 
         const hy2AuthApp = express();
-        hy2AuthApp.use(json());
         hy2AuthApp.use([hy2AuthPath], (req, res, next) => {
             req.url = req.originalUrl;
             httpServer.handle(req, res, next);
