@@ -12,15 +12,3 @@ services:
     environment:
       - NODE_PORT=2222
       - SECRET_KEY=""
-      # - HYSTERIA2_AUTH_PORT=3333
-
-  # hysteria2:
-  #   image: tobyxdd/hysteria:v2
-  #   container_name: hysteria2
-  #   hostname: hysteria2
-  #   network_mode: host
-  #   restart: always
-  #   volumes:
-  #     - ./hysteria2.yaml:/etc/hysteria/config.yaml
-  #   depends_on:
-  #     - remnanode

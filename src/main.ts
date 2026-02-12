@@ -97,7 +97,6 @@ async function bootstrap(): Promise<void> {
             XRAY_INTERNAL_FULL_PATH,
             '/' + REST_API.VISION.BLOCK_IP,
             '/' + REST_API.VISION.UNBLOCK_IP,
-            '/' + REST_API.HYSTERIA2.AUTH,
         ],
     });
 
@@ -135,39 +134,10 @@ async function bootstrap(): Promise<void> {
         });
     };
 
-    const hy2AuthPort = config.get<number>('HYSTERIA2_AUTH_PORT');
-    let closeHy2AuthServer: (() => void) | undefined;
-
-    if (hy2AuthPort) {
-        const hy2AuthPath = '/' + REST_API.HYSTERIA2.AUTH;
-
-        const hy2AuthApp = express();
-        hy2AuthApp.use([hy2AuthPath], (req, res, next) => {
-            req.url = req.originalUrl;
-            httpServer.handle(req, res, next);
-        });
-
-        const hy2AuthServer = hy2AuthApp.listen(hy2AuthPort, '127.0.0.1', () => {
-            logger.info(`Hysteria2 auth server listening on 127.0.0.1:${hy2AuthPort}`);
-        });
-
-        let hy2AuthServerClosed = false;
-        closeHy2AuthServer = () => {
-            if (hy2AuthServerClosed) return;
-            hy2AuthServerClosed = true;
-            hy2AuthServer.close(() => {
-                logger.info('Hysteria2 auth server shut down.');
-            });
-        };
-    }
-
     app.enableShutdownHooks();
 
     const shutdown = () => {
         closeInternalServer();
-        if (closeHy2AuthServer) {
-            closeHy2AuthServer();
-        }
     };
 
     process.on('SIGINT', shutdown);

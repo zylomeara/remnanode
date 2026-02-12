@@ -42,7 +42,7 @@
     "@remnawave/hashed-set": "^0.0.4",
     "@remnawave/supervisord-nestjs": "0.3.1",
     "@kastov/node-supervisord": ">=2.0.3",
-    "@remnawave/xtls-sdk": "0.10.0",
+    "@remnawave/xtls-sdk": "file:../xtls-sdk",
     "@remnawave/xtls-sdk-nestjs": "0.6.1",
     "compression": "^1.8.1",
     "enhanced-ms": "^4.2.0",

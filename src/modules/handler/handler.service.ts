@@ -77,7 +77,6 @@ export class HandlerService {
                                 hashData.vlessUuid,
                             );
                         }
-                        this.internalService.addHysteria2User(item.password, item.username);
                         response.push(tempRes);
                         break;
                     case 'vless':
@@ -103,6 +102,21 @@ export class HandlerService {
                             password: item.password,
                             cipherType: item.cipherType,
                             ivCheck: item.ivCheck,
+                            level: 0,
+                        });
+                        if (tempRes.isOk) {
+                            await this.internalService.addUserToInbound(
+                                item.tag,
+                                hashData.vlessUuid,
+                            );
+                        }
+                        response.push(tempRes);
+                        break;
+                    case 'hysteria2':
+                        tempRes = await this.xtlsApi.handler.addHysteriaUser({
+                            tag: item.tag,
+                            username: item.username,
+                            password: item.password,
                             level: 0,
                         });
                         if (tempRes.isOk) {
@@ -170,8 +184,6 @@ export class HandlerService {
                 response.push(tempRes);
             }
 
-            this.internalService.removeHysteria2User(username);
-
             if (response.every((res) => !res.isOk)) {
                 this.logger.error(JSON.stringify(response, null, 2));
                 return {
@@ -223,11 +235,6 @@ export class HandlerService {
                     await this.internalService.removeUserFromInbound(tag, user.userData.hashUuid);
                 }
 
-                this.internalService.addHysteria2User(
-                    user.userData.trojanPassword,
-                    user.userData.userId,
-                );
-
                 for (const item of user.inboundData) {
                     let tempRes = null;
 
@@ -269,6 +276,20 @@ export class HandlerService {
                                 password: user.userData.ssPassword,
                                 cipherType: CipherType.CHACHA20_POLY1305,
                                 ivCheck: false,
+                                level: 0,
+                            });
+                            if (tempRes.isOk) {
+                                await this.internalService.addUserToInbound(
+                                    item.tag,
+                                    user.userData.vlessUuid,
+                                );
+                            }
+                            break;
+                        case 'hysteria2':
+                            tempRes = await this.xtlsApi.handler.addHysteriaUser({
+                                tag: item.tag,
+                                username: user.userData.userId,
+                                password: user.userData.trojanPassword,
                                 level: 0,
                             });
                             if (tempRes.isOk) {
@@ -339,8 +360,6 @@ export class HandlerService {
                     await this.internalService.removeUserFromInbound(tag, hashUuid);
                     removeUsersResponse.push(tempRes);
                 }
-
-                this.internalService.removeHysteria2User(userId);
             }
 
             if (removeUsersResponse.every((res) => !res.isOk)) {

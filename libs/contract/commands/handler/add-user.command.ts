@@ -39,9 +39,21 @@ export namespace AddUserCommand {
         ivCheck: z.boolean(),
     });
 
+    const BaseHysteriaUser = z.object({
+        type: z.literal('hysteria2'),
+        tag: z.string(),
+        username: z.string(),
+        password: z.string(),
+    });
+
     export const RequestSchema = z.object({
         data: z.array(
-            z.discriminatedUnion('type', [BaseTrojanUser, BaseVlessUser, BaseShadowsocksUser]),
+            z.discriminatedUnion('type', [
+                BaseTrojanUser,
+                BaseVlessUser,
+                BaseShadowsocksUser,
+                BaseHysteriaUser,
+            ]),
         ),
         hashData: z.object({
             vlessUuid: z.string().uuid(),
