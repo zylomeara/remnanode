@@ -42,6 +42,7 @@
     "@peculiar/x509": "^1.14.3",
     "@remnawave/hashed-set": "^0.0.4",
     "@remnawave/supervisord-nestjs": "0.3.1",
+    "@remnawave/xtls-sdk": "npm:@zmrw/xtls-sdk@^0.1.0",
     "@remnawave/xtls-sdk-nestjs": "0.6.1",
     "@zmrw/xtls-sdk": "^0.1.0",
     "compression": "^1.8.1",
