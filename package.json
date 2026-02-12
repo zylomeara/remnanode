@@ -31,6 +31,7 @@
   "dependencies": {
     "@henrygd/semaphore": "0.1.0",
     "@kastov/body-parser-with-zstd": "2.2.2",
+    "@kastov/node-supervisord": ">=2.0.3",
     "@nestjs/common": "11.1.12",
     "@nestjs/config": "4.0.2",
     "@nestjs/core": "11.1.12",
@@ -41,9 +42,8 @@
     "@peculiar/x509": "^1.14.3",
     "@remnawave/hashed-set": "^0.0.4",
     "@remnawave/supervisord-nestjs": "0.3.1",
-    "@kastov/node-supervisord": ">=2.0.3",
-    "@remnawave/xtls-sdk": "file:../xtls-sdk",
     "@remnawave/xtls-sdk-nestjs": "0.6.1",
+    "@zmrw/xtls-sdk": "^0.1.0",
     "compression": "^1.8.1",
     "enhanced-ms": "^4.2.0",
     "helmet": "^8.1.0",

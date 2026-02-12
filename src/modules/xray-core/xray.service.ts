@@ -11,7 +11,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { InjectSupervisord } from '@remnawave/supervisord-nestjs';
 import { InjectXtls } from '@remnawave/xtls-sdk-nestjs';
-import { XtlsApi } from '@remnawave/xtls-sdk';
+import { XtlsApi } from '@zmrw/xtls-sdk';
 
 import { ISystemStats } from '@common/utils/get-system-stats/get-system-stats.interface';
 import { ICommandResponse } from '@common/types/command-response.type';

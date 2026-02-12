@@ -5,10 +5,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import {
     RemoveUserResponseModel as RemoveUserResponseModelFromSdk,
     AddUserResponseModel as AddUserResponseModelFromSdk,
-} from '@remnawave/xtls-sdk/build/src/handler/models';
-import { ISdkResponse } from '@remnawave/xtls-sdk/build/src/common/types';
+} from '@zmrw/xtls-sdk/build/src/handler/models';
+import { ISdkResponse } from '@zmrw/xtls-sdk/build/src/common/types';
 import { InjectXtls } from '@remnawave/xtls-sdk-nestjs';
-import { XtlsApi } from '@remnawave/xtls-sdk';
+import { XtlsApi } from '@zmrw/xtls-sdk';
 
 import { ICommandResponse } from '@common/types/command-response.type';
 import { ERRORS } from '@libs/contracts/constants/errors';
